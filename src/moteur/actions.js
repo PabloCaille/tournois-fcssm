@@ -75,7 +75,12 @@ export function tirerAuSort(tournoi, graine) {
   const ordre = melanger(presents, creerAlea(graine));
   const poules = [];
   let debut = 0;
-  for (const taille of taillesPoules(ordre.length, P.taillePoule)) {
+  // nbPoules (quinte féminine) impose le nombre de poules ; sinon on vise la taille de poule réglée.
+  const k = P.nbPoules ? Math.min(P.nbPoules, Math.floor(ordre.length / 2) || 1) : 0;
+  const tailles = k
+    ? Array.from({ length: k }, (_, i) => Math.floor(ordre.length / k) + (i < ordre.length % k ? 1 : 0))
+    : taillesPoules(ordre.length, P.taillePoule);
+  for (const taille of tailles) {
     poules.push(ordre.slice(debut, debut + taille));
     debut += taille;
   }
@@ -170,6 +175,17 @@ export function definirLieu(tournoi, idMatch, lieu) {
   if (lieu == null || lieu === '') delete lieux[idMatch];
   else lieux[idMatch] = Number(lieu);
   return { tournoi: { ...tournoi, lieux }, trace: { type: 'lieu', match: idMatch, lieu } };
+}
+
+/** Change la variante du format (quinte féminine). Le tirage est à refaire : la structure change. */
+export function choisirVariante(tournoi, variante) {
+  if (tournoi.demarre) throw new Error('Le tournoi a démarré : la formule ne peut plus changer.');
+  return { tournoi: { ...tournoi, variante, tirage: null, creneaux: {} }, trace: { type: 'variante', variante } };
+}
+
+/** Enregistre le planning horaire calculé (terrain et heure de chaque match). */
+export function definirCreneaux(tournoi, creneaux) {
+  return { tournoi: { ...tournoi, creneaux }, trace: { type: 'planning' } };
 }
 
 /** Change les paramètres du tournoi (barème, critères, score cible...). Les classements suivent aussitôt. */

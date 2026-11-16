@@ -217,7 +217,7 @@ export function vueSaisie(ctx) {
   // Un groupe de boutons par étape : « Phase 1 : tour 1, 2, 3 ».
   const onglets = vue.etapes.map((e) => `<span class="ligne"><span class="discret petit">${h(e.nom)}</span>${vue.manches.filter((x) => x.etape === e.id)
     .map((x) => `<button data-action="manche" data-id="${x.etape}:${x.tour}" aria-pressed="${x === manche}" title="${h(nomManche(x))}${x.terminee ? ', terminé' : x === courante ? ', en cours' : ''}">tour ${x.tour}${x.terminee ? ' ✓' : ''}</button>`).join('')}</span>`).join('');
-  const tries = manche.matchs.slice().sort((x, y) => (x.joue ? 1 : 0) - (y.joue ? 1 : 0) || x.vague - y.vague || x.lieu - y.lieu);
+  const tries = manche.matchs.slice().sort((x, y) => (x.joue ? 1 : 0) - (y.joue ? 1 : 0) || (x.heure || '').localeCompare(y.heure || '') || x.vague - y.vague || x.lieu - y.lieu);
   const liste = tries.map((m) => htmlMatch(m, equipes, {
     balise: m.pret ? 'button' : 'div', attributs: m.pret ? `data-action="ouvrir-match" data-id="${h(m.id)}"` : '',
     info: `${h(m.libelle)}${m.type === 'tableau' && m.nomNiveau ? `, ${h(m.nomNiveau)}` : ''}${m.vague > 1 ? `, vague ${m.vague}` : ''}${m.score && m.score.forfait ? ', forfait' : ''}`,
@@ -313,7 +313,8 @@ const TEXTES_TRACE = {
   parametres: () => 'Paramètres modifiés',
   creation: () => 'Tournoi créé',
   restauration: (t) => `Restauration de la sauvegarde de ${t.de}`,
-  planning: () => 'Planning recalculé',
+  planning: () => 'Planning horaire enregistré',
+  variante: (t) => `Formule changée : ${t.variante}`,
 };
 
 export function vueJournal({ evenement }) {

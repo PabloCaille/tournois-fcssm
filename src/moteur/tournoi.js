@@ -10,10 +10,14 @@ import { construireTableau, libellePlace } from './tableau.js';
 
 /** Paramètres effectifs d'un tournoi : défauts du format, remplacés par les réglages du tournoi. */
 export function parametresDe(tournoi) {
-  const defauts = formatDe(tournoi.format).parametres;
+  const format = formatDe(tournoi.format);
+  const defauts = format.parametres;
+  // Une variante (quinte féminine : toutes contre toutes, ou deux poules) peut imposer ses propres réglages.
+  const variante = (tournoi.variante && format.variantes && format.variantes[tournoi.variante] && format.variantes[tournoi.variante].parametres) || {};
   const perso = tournoi.parametres || {};
   return {
     ...defauts,
+    ...variante,
     ...perso,
     points: { ...defauts.points, ...(perso.points || {}) },
     forfait: { ...defauts.forfait, ...(perso.forfait || {}) },
@@ -55,7 +59,7 @@ function calculerPoules(etape, groupes, ctx) {
         const r = lireResultat(score, false);
         const m = {
           id, etape: etape.id, nomEtape: etape.nom, type: 'poule', groupe: g.id, nomGroupe: g.nom, niveau: g.niveau,
-          tour: t + 1, index, libelle: `Poule ${g.nom}`,
+          tour: t + 1, index, placeA: i, placeB: j, libelle: `Poule ${g.nom}`,
           a: a.equipe, b: b.equipe, origineA: a.origine, origineB: b.origine,
           pret, score: r.joue ? score : null, joue: r.joue, vainqueur: r.vainqueur || null, nul: !!r.nul,
         };
@@ -102,7 +106,7 @@ function composerDepuisEtape(etape, precedente, ctx) {
       const places = liste.map((e) => {
         const src = sourceParId.get(e.groupe);
         const ligne = src.terminee ? src.classement[e.rang - 1] : null;
-        return { equipe: ligne ? ligne.equipe : null, origine: `${ordinal(e.rang)} ${src.nom}` };
+        return { equipe: ligne ? ligne.equipe : null, origine: `${ordinal(e.rang)} ${src.nom}`, source: e.groupe };
       });
       groupes.push({ id: `${niveau.prefixe}${i + 1}`, nom: `${niveau.prefixe}${i + 1}`, niveau: niveau.id, nomNiveau: niveau.nom, places });
     });
@@ -170,7 +174,7 @@ function calculerTableaux(etape, precedente, ctx) {
       const r = lireResultat(score, true);
       const m = {
         id: s.id, etape: etape.id, nomEtape: etape.nom, type: 'tableau', niveau: niveau.id, nomNiveau: niveau.nom,
-        tour: s.tour, principal: !!s.principal, libelle: s.libelle,
+        tour: s.tour, principal: !!s.principal, libelle: s.libelle, refA: s.a, refB: s.b,
         a: a.equipe, b: b.equipe, origineA: a.origine, origineB: b.origine,
         pret, score: r.joue || r.attenteDepartage ? score : null, joue: r.joue, vainqueur: r.vainqueur || null,
         nul: false, attenteDepartage: !!r.attenteDepartage,
@@ -309,10 +313,10 @@ export function calculer(tournoi) {
         })).filter((g) => g.places.length > 0);
       } else groupes = composerDepuisEtape(def, precedente, ctx);
       calculerPoules(def, groupes, ctx);
-      vue.etapes.push({ id: def.id, nom: def.nom, type: 'poules', groupes });
+      vue.etapes.push({ id: def.id, nom: def.nom, type: 'poules', source: def.source || null, groupes });
     } else if (def.type === 'tableaux') {
       const tableaux = calculerTableaux(def, precedente, ctx);
-      vue.etapes.push({ id: def.id, nom: def.nom, type: 'tableaux', tableaux });
+      vue.etapes.push({ id: def.id, nom: def.nom, type: 'tableaux', source: def.source || null, tableaux });
     }
   }
 

@@ -10,7 +10,7 @@ import { creerEvenement, identifiantDepuisNom, appliquer, modifierEvenement } fr
 import * as stockage from '../donnees/stockage.js';
 import { h, annuaire, htmlMatch, htmlPoule, htmlClassementFinal, htmlQr, destinations, nomManche, adressePage, texteEquipe } from './rendu.js';
 import * as vues from './table-vues.js';
-import { vuePlanning, actionsPlanning } from './table-planning.js';
+import { vuePlanning, actionsPlanning, changerFormule } from './table-planning.js';
 
 const etat = {
   evenement: null,
@@ -137,7 +137,7 @@ function rendre() {
 /** Trouve le match à saisir pour un numéro de planche : d'abord dans la manche affichée, puis ailleurs. */
 function trouverMatch(vue, numero) {
   const affichee = vue.manches.find((x) => `${x.etape}:${x.tour}` === etat.mancheVue) || vue.mancheCourante;
-  const candidats = (manche) => manche.matchs.filter((m) => m.lieu === numero && m.pret).sort((x, y) => x.vague - y.vague);
+  const candidats = (manche) => manche.matchs.filter((m) => m.lieu === numero && m.pret).sort((x, y) => (x.heure || '').localeCompare(y.heure || '') || x.vague - y.vague);
   if (affichee) {
     const liste = candidats(affichee);
     const libre = liste.find((m) => !m.joue);
@@ -386,6 +386,7 @@ const changements = {
     const r = actions.modifierEquipe(x, Number(el.dataset.id), { present: el.checked });
     return { tournoi: { ...r.tournoi, tirage: null }, trace: r.trace }; // la présence change : tirage à refaire
   }, ''),
+  'planning-variante': (el) => changerFormule({ etat, enregistrer, maintenant, dire }, el.dataset.cle, el.value),
   importer: (el) => {
     const fichier = el.files[0];
     if (!fichier) return;

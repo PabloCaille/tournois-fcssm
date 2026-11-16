@@ -38,7 +38,7 @@ function pagesDuTournoi(tournoi, prefixe) {
       const taille = Math.min(3.6, 40 / Math.max(lignes, 6));
       pages.push({
         nom: `${prefixe}${nomManche(manche)} : ${pluriel(manche.joues, 'match terminé', 'matchs terminés')} sur ${manche.matchs.length}${tous.length > 1 ? ` (${i + 1}/${tous.length})` : ''}`,
-        html: `<div class="colonnes-matchs" style="grid-template-rows:repeat(${lignes},1fr);font-size:${taille}vh">${paquet.map((m) => htmlMatch(m, equipes, { joueurs: false })).join('')}</div>`,
+        html: `<div class="colonnes-matchs" style="grid-template-rows:repeat(${lignes},1fr);font-size:min(${taille}vh,${colonnes === 2 ? 1.55 : 2.6}vw)">${paquet.map((m) => htmlMatch(m, equipes, { joueurs: false })).join('')}</div>`,
       });
     });
   }

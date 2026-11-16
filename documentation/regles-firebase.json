@@ -1,0 +1,17 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "pub": {
+      "$id": {
+        ".read": true,
+        ".write": "root.child('cle').isString() && newData.parent().parent().child('preuves').child($id).child('cle').val() === root.child('cle').val() && newData.parent().parent().child('preuves').child($id).child('rev').val() === newData.child('rev').val() && (!data.exists() || newData.child('rev').val() > data.child('rev').val())"
+      }
+    },
+    "preuves": {
+      "$id": {
+        ".write": "root.child('cle').isString() && newData.child('cle').val() === root.child('cle').val()"
+      }
+    }
+  }
+}
