@@ -1,0 +1,11 @@
+{
+  "name": "tournois-fcssm",
+  "version": "1.0.0",
+  "description": "Outil de tournois du FC Sud Sèvre et Maine (palets, cornhole, quinte)",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "serveur": "python3 -m http.server 8080"
+  }
+}
