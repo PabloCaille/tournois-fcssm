@@ -1,0 +1,303 @@
+/* Feuille de style commune aux trois pages : table de marque, vidéoprojecteur, page publique.
+   Couleurs des niveaux reprises des feuilles imprimées du club :
+   vert = Principale, bleu = Principale Challenge, orange = Consolante, jaune = Consolante Challenge.
+   Jaune vif = case à remplir (comme les cellules jaunes des anciens Sheets). */
+
+@font-face { font-family: 'Barlow Condensed'; font-weight: 500; font-display: swap; src: url('../vendor/polices/barlow-condensed-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Condensed'; font-weight: 600; font-display: swap; src: url('../vendor/polices/barlow-condensed-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Condensed'; font-weight: 700; font-display: swap; src: url('../vendor/polices/barlow-condensed-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-weight: 400; font-display: swap; src: url('../vendor/polices/barlow-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-weight: 600; font-display: swap; src: url('../vendor/polices/barlow-latin-600-normal.woff2') format('woff2'); }
+
+:root {
+  --fond: #edf0ef;
+  --papier: #ffffff;
+  --encre: #14212b;
+  --plomb: #5a6972;
+  --trait: #d3dadc;
+  --plaque: #2b3942;
+  --saisie: #ffe77a;
+  --alerte: #b3261e;
+  --alerte-clair: #fbe3e0;
+  --niv0: #1f7a4d; --niv0-clair: #dff1e7;
+  --niv1: #2460a7; --niv1-clair: #dee9f7;
+  --niv2: #c2611a; --niv2-clair: #fbe8d8;
+  --niv3: #8f6d00; --niv3-clair: #fbf1c9;
+  --neutre: #2b3942; --neutre-clair: #e3e8ea;
+  --serre: 'Barlow Condensed', 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  --texte: 'Barlow', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --pas: 8px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--fond); color: var(--encre); font: 400 16px/1.45 var(--texte); }
+h1, h2, h3 { font-family: var(--serre); font-weight: 700; line-height: 1.1; margin: 0; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.2rem; }
+p { margin: 0 0 var(--pas); max-width: 72ch; }
+a { color: var(--niv1); }
+.discret { color: var(--plomb); }
+.petit { font-size: 0.875rem; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--niv1); outline-offset: 2px; }
+
+/* ---------- Boutons et champs ---------- */
+button, .bouton {
+  font: 600 1rem var(--texte); color: var(--encre); background: var(--papier);
+  border: 1.5px solid var(--encre); border-radius: 6px; padding: 8px 14px; cursor: pointer; text-decoration: none; display: inline-block;
+}
+button:hover, .bouton:hover { background: var(--neutre-clair); }
+button.principal { background: var(--encre); color: #fff; }
+button.principal:hover { background: #24384a; }
+button.danger { border-color: var(--alerte); color: var(--alerte); }
+button.lien { border: 0; background: none; padding: 0; color: var(--niv1); text-decoration: underline; font-weight: 400; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+input, select, textarea {
+  font: 400 1rem var(--texte); color: var(--encre); background: var(--papier);
+  border: 1.5px solid var(--plomb); border-radius: 6px; padding: 7px 10px; max-width: 100%;
+}
+textarea { width: 100%; min-height: 180px; font-family: ui-monospace, Consolas, monospace; font-size: 0.9rem; }
+input.jaune, textarea.jaune { background: var(--saisie); border-color: var(--encre); }
+label { display: block; font-weight: 600; margin-bottom: 4px; }
+.champ { margin-bottom: calc(var(--pas) * 2); }
+.champ .aide { font-weight: 400; color: var(--plomb); font-size: 0.875rem; display: block; }
+.ligne { display: flex; flex-wrap: wrap; gap: var(--pas); align-items: center; }
+.grille-champs { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0 calc(var(--pas) * 3); }
+
+/* ---------- Plaque : le numéro de planche (ou de terrain), carré comme une plaque de plomb ---------- */
+.plaque {
+  display: inline-grid; place-items: center; flex: none;
+  width: 2.3em; height: 2.3em; border-radius: 4px;
+  background: var(--plaque); color: #fff; font: 700 1em/1 var(--serre); font-variant-numeric: tabular-nums;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.14);
+}
+.plaque small { display: block; font: 500 0.42em/1 var(--serre); opacity: 0.8; margin-bottom: 1px; }
+.plaque.vide { background: var(--neutre-clair); color: var(--plomb); box-shadow: none; }
+
+/* ---------- Équipes ---------- */
+.eq { font-family: var(--serre); font-weight: 600; font-size: 1.1em; }
+.eq .num { display: inline-block; min-width: 1.6em; text-align: right; color: var(--plomb); font-weight: 500; margin-right: 0.3em; font-variant-numeric: tabular-nums; }
+.eq.attente { color: var(--plomb); font-weight: 500; font-style: italic; }
+.eq .joueurs { font: 400 0.75em var(--texte); color: var(--plomb); display: block; }
+
+/* ---------- Ligne de match ---------- */
+.match {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0 10px;
+  padding: 6px 8px; background: var(--papier); border-bottom: 1px solid var(--trait);
+}
+.match .a, .match .b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.match .a { text-align: right; }
+.match .a .eq { display: inline-flex; flex-direction: row-reverse; max-width: 100%; }
+.match .a .eq .num { margin: 0 0 0 0.3em; text-align: left; }
+.match .score { font: 700 1.25em/1 var(--serre); font-variant-numeric: tabular-nums; min-width: 3.6em; text-align: center; white-space: nowrap; }
+.match .score i { font-style: normal; font-weight: 500; }
+.match .score.attendu { color: var(--plomb); font-size: 1em; }
+.match .gagne .eq { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.match .info { grid-column: 1 / -1; font-size: 0.8rem; color: var(--plomb); padding-left: calc(2.3em + 10px); }
+.match.joue { background: #f7f9f8; }
+.match.joue .plaque { background: var(--neutre-clair); color: var(--plomb); box-shadow: none; }
+.liste-matchs { border: 1px solid var(--trait); border-radius: 8px; overflow: hidden; }
+.liste-matchs .match:last-child { border-bottom: 0; }
+button.match { width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--trait); border-radius: 0; font: inherit; }
+button.match:hover { background: #fff8d6; }
+
+/* ---------- Poule : bandeau de couleur du niveau + classement ---------- */
+.poules { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: calc(var(--pas) * 2); }
+.poule { background: var(--papier); border-radius: 8px; overflow: hidden; border: 1px solid var(--trait); }
+.poule > header { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 10px; background: var(--neutre); color: #fff; }
+.poule > header h3 { font-size: 1.25em; }
+.poule > header span { font: 500 0.85em var(--serre); opacity: 0.9; }
+.niv-0 > header { background: var(--niv0); }
+.niv-1 > header { background: var(--niv1); }
+.niv-2 > header { background: var(--niv2); }
+.niv-3 > header { background: var(--niv3); }
+table.classement { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+table.classement th { font: 500 0.8em var(--serre); color: var(--plomb); text-align: right; padding: 4px 6px; border-bottom: 1px solid var(--trait); }
+table.classement th.g, table.classement td.g { text-align: left; }
+table.classement td { padding: 5px 6px; text-align: right; border-bottom: 1px solid var(--trait); font-family: var(--serre); font-size: 1.05em; }
+table.classement tr:last-child td { border-bottom: 0; }
+table.classement td.g { max-width: 0; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+table.classement td.rang { width: 2em; text-align: center; font-weight: 700; border-left: 6px solid transparent; }
+table.classement td.pts { font-weight: 700; }
+table.classement tr.vers-0 td.rang { border-left-color: var(--niv0); background: var(--niv0-clair); }
+table.classement tr.vers-1 td.rang { border-left-color: var(--niv1); background: var(--niv1-clair); }
+table.classement tr.vers-2 td.rang { border-left-color: var(--niv2); background: var(--niv2-clair); }
+table.classement tr.vers-3 td.rang { border-left-color: var(--niv3); background: var(--niv3-clair); }
+table.classement tr.qualifie td.rang { border-left-color: var(--niv0); background: var(--niv0-clair); }
+table.classement tr.suivie td { background: #fff8d6; }
+.depart { font: 500 0.75em var(--texte); color: var(--alerte); white-space: nowrap; }
+.poule .attente-poule { padding: 10px; color: var(--plomb); font-style: italic; }
+
+/* ---------- Tableau final ---------- */
+.tableau { background: var(--papier); border-radius: 8px; border: 1px solid var(--trait); overflow: hidden; margin-bottom: calc(var(--pas) * 2); }
+.tableau > header { padding: 6px 10px; background: var(--neutre); color: #fff; }
+.tableau .colonnes { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 1fr); gap: 0; overflow-x: auto; }
+.tableau .colonne { padding: 8px; display: flex; flex-direction: column; justify-content: space-around; gap: 8px; border-right: 1px solid var(--trait); }
+.tableau .colonne:last-child { border-right: 0; }
+.tableau .colonne > h4 { margin: 0; font: 600 0.9em var(--serre); color: var(--plomb); }
+.duel { border: 1.5px solid var(--trait); border-radius: 6px; overflow: hidden; }
+.duel .titre { display: flex; justify-content: space-between; align-items: center; gap: 6px; font: 500 0.8em var(--serre); color: var(--plomb); padding: 2px 6px; background: #f3f5f5; }
+.duel .titre .plaque { font-size: 0.75em; }
+.duel .cote { display: flex; justify-content: space-between; gap: 8px; padding: 3px 6px; border-top: 1px solid var(--trait); }
+.duel .cote .eq { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.duel .cote b { font: 700 1.1em var(--serre); font-variant-numeric: tabular-nums; }
+.duel .cote.gagne { background: var(--niv0-clair); }
+.duel.final { border-color: var(--encre); }
+.tableau .classement-matchs { border-top: 1px solid var(--trait); padding: 8px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+
+/* ---------- Classement final ---------- */
+table.final { width: 100%; border-collapse: collapse; background: var(--papier); font-variant-numeric: tabular-nums; }
+table.final td, table.final th { padding: 5px 8px; border-bottom: 1px solid var(--trait); text-align: left; }
+table.final td.place { font: 700 1.1em var(--serre); white-space: nowrap; width: 5.5em; }
+table.final th { font: 500 0.85em var(--serre); color: var(--plomb); }
+.pastille { display: inline-block; padding: 1px 8px; border-radius: 99px; font: 600 0.85em var(--serre); background: var(--neutre-clair); }
+.pastille.niv-0 { background: var(--niv0-clair); color: var(--niv0); }
+.pastille.niv-1 { background: var(--niv1-clair); color: var(--niv1); }
+.pastille.niv-2 { background: var(--niv2-clair); color: var(--niv2); }
+.pastille.niv-3 { background: var(--niv3-clair); color: var(--niv3); }
+
+/* ---------- Bandeaux ---------- */
+.bandeau { padding: 10px 14px; border-radius: 8px; margin-bottom: calc(var(--pas) * 2); border: 1.5px solid; }
+.bandeau.alerte { background: var(--alerte-clair); border-color: var(--alerte); }
+.bandeau.info { background: var(--niv1-clair); border-color: var(--niv1); }
+.bandeau.ok { background: var(--niv0-clair); border-color: var(--niv0); }
+.bandeau h3 { margin-bottom: 4px; }
+#message { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; max-width: min(92vw, 640px); padding: 12px 18px; border-radius: 8px; background: var(--encre); color: #fff; font-weight: 600; box-shadow: 0 6px 24px rgba(20, 33, 43, 0.35); }
+#message.erreur { background: var(--alerte); }
+
+/* ========== Table de marque ========== */
+.app { display: grid; grid-template-columns: 210px 1fr; min-height: 100vh; }
+.app > nav { background: var(--encre); color: #fff; padding: 14px 10px; display: flex; flex-direction: column; gap: 4px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.app > nav .titre { font: 700 1.3rem/1.1 var(--serre); padding: 4px 8px 12px; }
+.app > nav .titre small { display: block; font: 400 0.8rem var(--texte); opacity: 0.75; margin-top: 4px; }
+.app > nav button { text-align: left; background: none; border: 0; color: #fff; padding: 9px 10px; border-radius: 6px; font-weight: 400; display: flex; justify-content: space-between; align-items: center; }
+.app > nav button:hover { background: rgba(255, 255, 255, 0.1); }
+.app > nav button[aria-current='page'] { background: #fff; color: var(--encre); font-weight: 600; }
+.app > nav .badge { background: var(--alerte); color: #fff; border-radius: 99px; padding: 0 7px; font-size: 0.8rem; font-weight: 600; }
+.app > nav .bas { margin-top: auto; font-size: 0.8rem; opacity: 0.85; padding: 8px; }
+.app > nav select { width: 100%; margin-bottom: 8px; }
+.app > main { padding: 20px 26px 80px; min-width: 0; }
+.app > main > section > h1 { margin-bottom: 4px; }
+.app > main > section > .chapeau { color: var(--plomb); margin-bottom: calc(var(--pas) * 3); }
+.bloc { background: var(--papier); border: 1px solid var(--trait); border-radius: 8px; padding: 16px; margin-bottom: calc(var(--pas) * 2); }
+.bloc > h2 { margin-bottom: 10px; }
+.deux-colonnes { display: grid; grid-template-columns: minmax(320px, 440px) 1fr; gap: calc(var(--pas) * 3); align-items: start; }
+.onglets-etapes { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: calc(var(--pas) * 2); }
+.onglets-etapes button[aria-pressed='true'] { background: var(--encre); color: #fff; }
+
+/* Saisie d'un score */
+.saisie-planche { display: flex; gap: 10px; align-items: end; margin-bottom: 14px; }
+.saisie-planche input { font: 700 2rem var(--serre); width: 5ch; text-align: center; }
+.fiche-score { border: 2px solid var(--encre); border-radius: 8px; padding: 14px; background: var(--papier); }
+.fiche-score .tete { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 1.3rem; }
+.fiche-score .cote { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 6px 0; font-size: 1.25rem; }
+.fiche-score .cote input { font: 700 1.8rem var(--serre); width: 4.2ch; text-align: center; }
+.fiche-score .controle { margin: 10px 0; padding: 10px; border-radius: 6px; background: var(--niv0-clair); font-weight: 600; }
+.fiche-score .controle.attention { background: var(--saisie); }
+.tirage .poule li { cursor: pointer; }
+.tirage .poule li.choisie { background: var(--saisie); }
+.liste-equipes { list-style: none; margin: 0; padding: 0; }
+.liste-equipes li { padding: 5px 10px; border-bottom: 1px solid var(--trait); }
+.liste-equipes li:last-child { border-bottom: 0; }
+table.equipes { width: 100%; border-collapse: collapse; }
+table.equipes td, table.equipes th { padding: 4px 6px; border-bottom: 1px solid var(--trait); text-align: left; }
+table.equipes input[type='text'] { width: 100%; padding: 4px 6px; }
+table.journal { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+table.journal td { padding: 4px 8px; border-bottom: 1px solid var(--trait); vertical-align: top; }
+.qr { background: #fff; padding: 10px; display: inline-block; border-radius: 6px; border: 1px solid var(--trait); }
+.qr svg { display: block; width: 180px; height: 180px; }
+
+/* ========== Vidéoprojecteur ========== */
+body.ecran { overflow: hidden; height: 100vh; display: grid; grid-template-rows: auto 1fr auto; font-size: clamp(12px, 1.45vw, 30px); }
+.ecran > header { display: flex; justify-content: space-between; align-items: center; gap: 2vw; padding: 0.8vh 1.6vw; background: var(--encre); color: #fff; }
+.ecran > header h1 { font-size: 1.9em; }
+.ecran > header .vue { font: 600 1.5em var(--serre); }
+.ecran > header .heure { font: 700 1.9em var(--serre); font-variant-numeric: tabular-nums; }
+.ecran > main { padding: 1.2vh 1.2vw; overflow: hidden; min-height: 0; }
+.ecran > footer { display: flex; align-items: center; gap: 1.2vw; padding: 0.6vh 1.6vw; background: var(--papier); border-top: 1px solid var(--trait); }
+.ecran > footer .progression { flex: 1; height: 0.7vh; background: var(--trait); border-radius: 99px; overflow: hidden; }
+.ecran > footer .progression i { display: block; height: 100%; width: 0; background: var(--encre); }
+.ecran > footer .qr { padding: 4px; border: 0; }
+.ecran > footer .qr svg { width: 8.5vh; height: 8.5vh; }
+.ecran > footer .invite { font: 600 1.05em var(--serre); line-height: 1.15; }
+.ecran .colonnes-matchs { display: grid; gap: 0 1.2vw; height: 100%; grid-auto-flow: column; }
+.ecran .colonnes-matchs .match { padding: 0 0.6vw; font-size: 1em; border-bottom: 1px solid var(--trait); min-height: 0; }
+.ecran .match .plaque { font-size: 0.95em; }
+.ecran .grille-poules { display: grid; gap: 1vh 0.9vw; height: 100%; }
+.ecran .poule { display: flex; flex-direction: column; min-height: 0; }
+.ecran .poule > header { padding: 0.2vh 0.6vw; }
+.ecran .poule table.classement { flex: 1; }
+.ecran .poule table.classement td { padding: 0 0.4vw; }
+.ecran .poule .liste-equipes li { padding: 0 0.6vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ecran .poule table.classement th { padding: 0 0.4vw; }
+.ecran .tableau { height: 100%; display: flex; flex-direction: column; margin: 0; font-size: 2.15vh; }
+.ecran .tableau > header { padding: 0.3vh 0.8vw; }
+.ecran .tableau .colonnes { flex: 1; min-height: 0; overflow: hidden; grid-auto-columns: 1fr; }
+.ecran .tableau .colonne { padding: 0.8vh 0.8vw; gap: 0.6vh; min-height: 0; }
+.ecran .tableau .duel .titre .plaque { font-size: 0.8em; }
+.ecran .tableau .duel .cote { padding: 0.1vh 0.5vw; }
+.ecran .tableau .classement-matchs { grid-template-columns: repeat(4, 1fr); font-size: 0.88em; padding: 0.8vh 0.8vw; gap: 0.6vh 0.6vw; }
+.ecran .colonnes-final { display: grid; grid-auto-flow: column; gap: 0 1.2vw; height: 100%; }
+.ecran .colonnes-final .rang-final { display: flex; align-items: center; gap: 0.6vw; border-bottom: 1px solid var(--trait); background: var(--papier); padding: 0 0.6vw; min-height: 0; }
+.ecran .colonnes-final .place { font: 700 1.1em var(--serre); min-width: 4.2em; }
+.ecran .vide { display: grid; place-items: center; height: 100%; text-align: center; }
+.ecran .vide h2 { font-size: 3em; }
+.ecran .bandeau-depart { background: var(--saisie); padding: 0.3vh 1vw; font-weight: 600; text-align: center; }
+
+/* ========== Page publique (téléphone) ========== */
+body.public { padding-bottom: 40px; }
+.public > header { background: var(--encre); color: #fff; padding: 14px 16px; }
+.public > header h1 { font-size: 1.6rem; }
+.public > header p { margin: 2px 0 0; opacity: 0.8; font-size: 0.9rem; }
+.public > nav { display: flex; overflow-x: auto; background: var(--papier); border-bottom: 1px solid var(--trait); position: sticky; top: 0; z-index: 5; }
+.public > nav button { border: 0; border-radius: 0; border-bottom: 3px solid transparent; background: none; padding: 12px 14px; white-space: nowrap; font-weight: 400; }
+.public > nav button[aria-current='page'] { border-bottom-color: var(--encre); font-weight: 600; }
+.public > main { padding: 14px 12px; max-width: 900px; margin: 0 auto; }
+.public .recherche input { width: 100%; font-size: 1.1rem; padding: 12px; }
+.public .resultats { list-style: none; padding: 0; margin: 8px 0 0; background: var(--papier); border-radius: 8px; border: 1px solid var(--trait); }
+.public .resultats li button { width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--trait); border-radius: 0; padding: 10px 12px; font-weight: 400; }
+.carte-equipe { background: var(--papier); border: 2px solid var(--encre); border-radius: 10px; padding: 14px; margin-bottom: 14px; }
+.carte-equipe .prochain { display: flex; gap: 14px; align-items: center; margin: 10px 0; }
+.carte-equipe .prochain .plaque { font-size: 2rem; }
+.carte-equipe .prochain .contre { font: 600 1.3rem/1.2 var(--serre); }
+.public h2 { margin: 18px 0 8px; }
+.etat-liaison { font-size: 0.8rem; color: var(--plomb); text-align: center; margin-top: 20px; }
+
+@media (max-width: 760px) {
+  .app { grid-template-columns: 1fr; }
+  .app > nav { position: static; height: auto; flex-direction: row; flex-wrap: wrap; }
+  .app > nav .titre, .app > nav .bas { width: 100%; }
+  .app > main { padding: 14px 12px 80px; }
+  .deux-colonnes { grid-template-columns: 1fr; }
+}
+/* Téléphone : chaque match sur deux lignes, une équipe par ligne, le score à droite. */
+@media (max-width: 620px) {
+  .match { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'plaque a sa' 'plaque b sb' 'info info info'; gap: 2px 10px; padding: 8px; }
+  .match .plaque { grid-area: plaque; }
+  .match .a { grid-area: a; text-align: left; }
+  .match .a .eq { flex-direction: row; }
+  .match .a .eq .num { margin: 0 0.3em 0 0; text-align: right; }
+  .match .b { grid-area: b; }
+  .match .score { display: contents; }
+  .match .score i { display: none; }
+  .match .score .sa { grid-area: sa; font-size: 1.25em; }
+  .match .score .sb { grid-area: sb; font-size: 1.25em; }
+  .match .info { grid-area: info; padding-left: 0; }
+  table.classement td.g { white-space: normal; }
+}
+
+/* ========== Impression ========== */
+#impression { display: none; }
+@media print {
+  body > *:not(#impression) { display: none !important; }
+  #impression { display: block; font-size: 11pt; }
+  #impression h1 { font-size: 18pt; margin-bottom: 6pt; }
+  #impression .poules { grid-template-columns: repeat(4, 1fr); gap: 8pt; }
+  #impression .match { break-inside: avoid; padding: 3pt 4pt; }
+  #impression .poule, #impression .tableau { break-inside: avoid; }
+  .plaque { background: #fff !important; color: #000 !important; border: 1.5pt solid #000; box-shadow: none; }
+  .poule > header, .tableau > header { background: #fff !important; color: #000 !important; border-bottom: 1.5pt solid #000; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

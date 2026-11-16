@@ -215,6 +215,7 @@ function attribuerLieux(vue, tournoi, P) {
   const creneaux = tournoi.creneaux || {};
   const lieux = tournoi.lieux || {};
   for (const m of vue.matchs) {
+    m.nomLieu = vue.format.nomLieu || 'Planche';
     if (creneaux[m.id]) { m.lieu = creneaux[m.id].lieu; m.heure = creneaux[m.id].heure; m.vague = 1; }
     if (lieux[m.id] != null) m.lieu = lieux[m.id];
   }

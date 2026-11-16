@@ -13,3 +13,9 @@ export function formatDe(id) {
   if (!f) throw new Error(`Format inconnu : ${id}`);
   return f;
 }
+
+// Modèles d'événement proposés à la création : un événement contient un ou plusieurs tournois.
+export const MODELES = [
+  { id: 'palets', nom: 'Palets', nomDefaut: 'Tournoi de palets FCSSM', tournois: [{ cle: 'principal', nom: 'Palets', format: 'palets' }] },
+  { id: 'cornhole', nom: 'Cornhole', nomDefaut: 'Tournoi de cornhole FCSSM', tournois: [{ cle: 'principal', nom: 'Cornhole', format: 'cornhole' }] },
+];
