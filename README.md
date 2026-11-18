@@ -36,3 +36,4 @@ npm test
 ```
 
 Node 18 ou plus, aucune dépendance.
+
