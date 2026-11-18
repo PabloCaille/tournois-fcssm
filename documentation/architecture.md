@@ -50,7 +50,7 @@ Les trois pages utilisent ce même calcul.
 | `table.js` | table de marque : état de la page, clics, enregistrement |
 | `table-vues.js` | HTML des rubriques de la table |
 | `table-planning.js` | rubrique Planning (quinte) |
-| `ecran.js` | vidéoprojecteur |
+| `ecran.js` | vidéoprojecteur : vues, défilement automatique ou manuel, barre de commandes (voir `ecran.md`) |
 | `public.js` | page publique |
 | `styles.css` | une seule feuille de style |
 

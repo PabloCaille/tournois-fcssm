@@ -18,6 +18,7 @@ Site en ligne : https://pablocaille.github.io/tournois-fcssm/table.html
 3. `documentation/ajouter-un-format.md`, `documentation/changer-un-critere.md`, `documentation/lancer-les-tests.md`.
 4. `documentation/hebergement.md` : GitHub Pages, Firebase, règles de sécurité, changement de service.
 5. `documentation/jour-j.md` : mode d'emploi pour la table de marque.
+6. `documentation/ecran.md` : écran du vidéoprojecteur (vues, défilement automatique ou manuel, commandes, réglages).
 
 ## Lancer en local
 
