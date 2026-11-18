@@ -12,11 +12,13 @@ ne s'applique pas à ce mode de lecture.
 ## Publier une nouvelle version du site
 
 ```
-git push origin main main:gh-pages
+git push origin main
 ```
 
-GitHub Pages sert la branche `gh-pages`. Pour ne garder qu'une branche : sur GitHub, Settings > Pages > Source
-« Deploy from a branch » > `main` / `(root)`, puis supprimer `gh-pages` et pousser seulement `main`.
+GitHub Pages sert la branche `main`, dossier racine (Settings > Pages > Source « Deploy from a branch » > `main` / `(root)`,
+réglé le 18/11/2026). Chaque envoi sur `main` relance la publication (1 à 2 minutes, onglet Actions,
+« pages build and deployment »). Pour forcer le rechargement sur l'ordinateur de l'écran : Ctrl+F5.
+La branche `gh-pages` (ancienne source, figée au 16/11/2026) ne sert plus.
 
 ## Brancher la base Firebase
 
