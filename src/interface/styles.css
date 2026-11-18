@@ -244,6 +244,27 @@ body.ecran { overflow: hidden; height: 100vh; display: grid; grid-template-rows:
 .ecran .colonnes-final .place { font: 700 1.1em var(--serre); min-width: 4.2em; }
 .ecran .vide { display: grid; place-items: center; height: 100%; text-align: center; }
 .ecran .vide h2 { font-size: 3em; }
+/* Barre de commandes de l'écran, en bas à gauche (façon Google Slides) */
+.ecran > main { cursor: pointer; }
+.ecran.calme, .ecran.calme > main { cursor: none; }
+.ecran .commandes { position: fixed; left: 1.2vw; bottom: calc(8.5vh + 3.5vh); z-index: 10; font: 400 15px/1.3 var(--texte); transition: opacity 0.3s; }
+.ecran.calme .commandes { opacity: 0; pointer-events: none; }
+.ecran .barre-commandes { display: flex; align-items: center; gap: 2px; padding: 4px; background: rgba(20, 33, 43, 0.88); border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25); }
+.ecran .barre-commandes button { background: none; border: 0; color: #fff; padding: 6px; border-radius: 6px; display: grid; place-items: center; }
+.ecran .barre-commandes button:hover, .ecran .barre-commandes button[aria-expanded='true'] { background: rgba(255, 255, 255, 0.16); }
+.ecran .barre-commandes svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ecran .barre-commandes svg .plein { fill: currentColor; stroke: none; }
+.ecran .barre-commandes .compteur { color: #fff; font: 600 15px var(--serre); padding: 0 8px; min-width: 4.5em; text-align: center; font-variant-numeric: tabular-nums; }
+.ecran .panneau-reglages { position: absolute; left: 0; bottom: calc(100% + 6px); width: 340px; max-height: 70vh; overflow: auto; background: var(--papier); color: var(--encre); border-radius: 8px; padding: 10px 12px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25); }
+.ecran .panneau-reglages .titre-panneau { font: 700 13px var(--serre); text-transform: uppercase; letter-spacing: 0.04em; color: var(--plomb); margin: 10px 0 4px; }
+.ecran .panneau-reglages .titre-panneau:first-child { margin-top: 0; }
+.ecran .panneau-reglages .choix { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
+.ecran .panneau-reglages select { width: 100%; padding: 5px; font: inherit; }
+.ecran .liste-vues { margin: 0; padding: 0 0 0 1.6em; }
+.ecran .liste-vues button { background: none; border: 0; padding: 3px 4px; text-align: left; font: inherit; width: 100%; border-radius: 4px; }
+.ecran .liste-vues button:hover { background: var(--neutre-clair); }
+.ecran .liste-vues button.actuelle { font-weight: 600; background: var(--saisie); }
+.ecran > footer .mode-defil { font-weight: 600; white-space: nowrap; }
 .ecran .bandeau-depart { background: var(--saisie); padding: 0.3vh 1vw; font-weight: 600; text-align: center; }
 
 /* ========== Page publique (téléphone) ========== */

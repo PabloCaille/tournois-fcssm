@@ -19,6 +19,9 @@
 - Forfait, changement de planche, effacement : dans la fiche du match, « Forfait, planche, effacement ».
 - Corriger un score : choisir le tour concerné, rouvrir le match, ressaisir. La correction est tracée au journal.
 - Les poules de l'étape suivante se remplissent seules dès qu'une poule est terminée.
+- **Écran** : bouger la souris fait apparaître la barre en bas à gauche (comme Google Slides).
+  Bouton lecture/pause = défilement automatique ou manuel ; roue = durée par vue, boucle, accès direct à une vue.
+  Quand les gens cherchent leur match, passer en **manuel** et avancer au clic ou à la flèche droite.
 
 ## En cas de problème
 

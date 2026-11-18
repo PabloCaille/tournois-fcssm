@@ -282,8 +282,8 @@ export function vueDiffusion({ evenement, etat }) {
       <div class="bloc"><h2>Écran du vidéoprojecteur</h2>
         <p>Ouvrez cette adresse sur l'ordinateur relié au vidéoprojecteur, puis F11 pour le plein écran.</p>
         <p><a href="${h(ecran)}" target="_blank" rel="noopener">${h(ecran)}</a></p>
-        ${champ('Durée d\'affichage de chaque vue (secondes)', `<input type="number" id="duree-vue" min="4" max="120" value="${evenement.affichage ? evenement.affichage.duree : 15}" style="width:6em"> <button data-action="enregistrer-duree">Appliquer</button>`)}
-        <p class="discret petit">Sur l'écran : flèches gauche et droite pour changer de vue, espace pour mettre en pause.</p>
+        ${champ('Durée par défaut de chaque vue (secondes)', `<input type="number" id="duree-vue" min="4" max="120" value="${evenement.affichage ? evenement.affichage.duree : 15}" style="width:6em"> <button data-action="enregistrer-duree">Appliquer</button>`)}
+        <p class="discret petit">Sur l'écran, bougez la souris : une barre apparaît en bas à gauche pour choisir le défilement automatique ou manuel, la durée et la boucle. En manuel, un clic (ou la flèche droite, ou une télécommande de présentation) passe à la vue suivante, la flèche gauche revient en arrière. Espace bascule entre automatique et manuel.</p>
       </div>
       <div class="bloc"><h2>Page publique et QR code</h2>
         ${local ? '<p class="discret petit">Vous êtes sur une adresse locale : ce QR code ne fonctionnera sur les téléphones qu\'une fois le site en ligne.</p>' : ''}
